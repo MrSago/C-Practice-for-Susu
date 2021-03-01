@@ -51,7 +51,7 @@ int main() {
 	for (i = 0; i < n - 1; ++i) {
 		if (new_mass[i] > new_mass[i + 1]) {
 			flag = 0;
-            break;
+			break;
 		}
 	}
 	if (flag) {

@@ -36,7 +36,7 @@ int main() {
 	}
 
 	max = INT_MIN, min = INT_MAX;
-    max_i = 0, min_i = 0;
+	max_i = 0, min_i = 0;
 	for (i = 0; i < n; ++i) {
 		if (mass[i] > max) {
 			max = mass[i];

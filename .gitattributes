@@ -1,0 +1,12 @@
+
+* text=auto
+
+# GitHub
+.gitattributes	text
+.gitignore		text
+
+# Source files
+*.c				text
+
+# Test files
+*.txt			text
