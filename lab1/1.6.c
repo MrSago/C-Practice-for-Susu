@@ -14,6 +14,9 @@ int main() {
 	double eps;
 
 
+	printf("Welcome to lab 1.6\n");
+
+	printf("Enter eps: ");
 	if (scanf("%lf", &eps) != 1 || eps <= 0.0) {
 		printf("Error input\n");
 		return 0;
@@ -21,8 +24,7 @@ int main() {
 
 	do {
 		sum += next;
-		p *= -1;
-		p <<= 1;
+		p *= -2;
 		f *= ++i;
 		next = (double)p / (double)f;
 	} while (fabs(next) > eps);

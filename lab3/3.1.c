@@ -20,6 +20,8 @@ int main() {
 	int d, i;
 
 
+	printf("Welcome to lab 3.1\n");
+
 	fd = fopen("INPUT.TXT", "r");
 	if (fd == (FILE*)NULL) {
 		printf("Error open file\n");
@@ -40,7 +42,6 @@ int main() {
 			tmp = (int*)realloc(arr.m, sizeof(int) * (arr.capacity *= 2));
 			if (tmp == (int*)NULL) {
 				fclose(fd);
-				free(arr.m);
 				printf("Error allocate memory\n");
 				return 0;
 			}
@@ -56,6 +57,7 @@ int main() {
 	}
 	printf("\n");
 
+	printf("Enter digit: ");
 	if (scanf("%d", &d) != 1) {
 		free(arr.m);
 		printf("Error input\n");
@@ -64,7 +66,6 @@ int main() {
 
 	tmp = (int*)realloc(arr.m, sizeof(int) * (arr.capacity = (arr.size * 2)));
 	if (tmp == (int*)NULL) {
-		free(arr.m);
 		printf("Error allocate memory\n");
 		return 0;
 	}

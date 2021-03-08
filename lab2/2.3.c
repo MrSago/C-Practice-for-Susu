@@ -11,9 +11,12 @@ int main() {
 	int* mass;
 	int* tmp;
 	int last_min, count_even, cur;
-	int n, i, j;
+	int n = 0, i, j;
 
 
+	printf("Welcome to lab 2.3\n");
+
+	printf("Enter n: ");
 	if (scanf("%d", &n) != 1 || n <= 0) {
 		printf("Error input\n");
 		return 0;
@@ -25,6 +28,7 @@ int main() {
 		return 0;
 	}
 
+	printf("Enter array: ");
 	last_min = 0;
 	count_even = 0;
 	for (i = 0; i < n; ++i) {
@@ -36,7 +40,6 @@ int main() {
 		if (cur % 2 == 0 && ++count_even % 2 == 0 && last_min < 0) {
 			tmp = (int*)realloc(mass, sizeof(int) * ++n);
 			if (tmp == (int*)NULL) {
-				free(mass);
 				printf("Error allocate memory\n");
 				return 0;
 			}
@@ -50,6 +53,7 @@ int main() {
 		mass[i] = cur;
 	}
 
+	printf("Result #1: ");
 	for (i = 0; i < n; ++i) {
 		printf("%d ", mass[i]);
 	}
@@ -67,12 +71,12 @@ int main() {
 
 	tmp = (int*)realloc(mass, sizeof(int) * n);
 	if (tmp == (int*)NULL) {
-		free(mass);
 		printf("Error allocate memory\n");
 		return 0;
 	}
 	mass = tmp;
 
+	printf("Result #2: ");
 	for (i = 0; i < n; ++i) {
 		printf("%d ", mass[i]);
 	}

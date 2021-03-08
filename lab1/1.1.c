@@ -7,7 +7,7 @@
 #include <math.h>
 
 #ifndef M_PI
-	#define M_PI acos(-1)
+	#define M_PI (acos(-1))
 #endif //M_PI
 
 
@@ -15,6 +15,9 @@ int main() {
 	double x, y, z;
 
 
+	printf("Welcome to lab 1.1\n");
+
+	printf("Enter x y z: ");
 	if (scanf("%lf%lf%lf", &x, &y, &z) != 3) {
 		printf("Error with input\n");
 		return 0;

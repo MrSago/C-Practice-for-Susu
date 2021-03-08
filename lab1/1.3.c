@@ -3,13 +3,13 @@
 
 
 int main() {
-	int sum, f, s, i;
+	int sum, i;
 
+
+	printf("Welcome to lab 1.3\n");
 
 	for (i = 10; i <= 99; ++i) {
-		f = i / 10;
-		s = i % 10;
-		sum = f + s;
+		sum = i / 10 + i % 10;
 		if (sum * (1 + sum) == i) {
 			printf("%d ", i);
 		}

@@ -13,9 +13,12 @@ int main() {
 	int max, min;
 	int max_i, min_i;
 	int start, end;
-	int n, i;
+	int n = 0, i;
 
 
+	printf("Welcome to lab 2.2\n");
+
+	printf("Enter n: ");
 	if (scanf("%d", &n) != 1 || n <= 0) {
 		printf("Error input\n");
 		return 0;
@@ -27,6 +30,7 @@ int main() {
 		return 0;
 	}
 
+	printf("Enter array: ");
 	for (i = 0; i < n; ++i) {
 		if (scanf("%d", &mass[i]) != 1) {
 			free(mass);
@@ -42,7 +46,7 @@ int main() {
 			max = mass[i];
 			max_i = i;
 		}
-		if (mass[i] < min) {
+		if (mass[i] <= min) {
 			min = mass[i];
 			min_i = i;
 		}
@@ -60,6 +64,7 @@ int main() {
 		}
 	}
 
+	printf("Result: ");
 	for (i = 0; i < n; ++i) {
 		printf("%d ", mass[i]);
 	}

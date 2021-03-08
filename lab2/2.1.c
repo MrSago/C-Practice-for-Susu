@@ -12,9 +12,12 @@ int main() {
 	double* new_mass;
 	char flag;
 	double res;
-	int n, i;
+	int n = 0, i;
 
 
+	printf("Welcome to lab 2.1\n");
+
+	printf("Enter n: ");
 	if (scanf("%d", &n) != 1 || n <= 0) {
 		printf("Error input\n");
 		return 0;
@@ -33,6 +36,7 @@ int main() {
 		return 0;
 	}
 
+	printf("Enter array: ");
 	for (i = 0; i < n; ++i) {
 		if (scanf("%lf", &mass[i]) != 1) {
 			free(mass);
@@ -65,7 +69,7 @@ int main() {
 			res *= mass[n];
 		}
 	}
-	printf("%lf\n", res);
+	printf("Result: %lf\n", res);
 
 	free(mass);
 	free(new_mass);

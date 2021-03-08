@@ -41,12 +41,12 @@ void printError(FILE* stream, const int err, ...) {
 	fprintf(stream, "Error code: %d\n", err);
 
 	switch (err) {
-	case EPARGS:  msg = "Usage: %s -i [input file] -o [output file]\n"; break;
-	case EFOPEN:  msg = "Can't open file: %s\n"; break;
-	case EFREAD:  msg = "Can't read from file: %s\n"; break;
-	case EFWRITE: msg = "Can't write in file: %s\n"; break;
-	case EALLOC:  msg = "Error allocate memory\n"; break;
-	default:	  msg = "Unknown error\n"; break; }
+	case EPARGS:	msg = "Usage: %s -i [input file] -o [output file]\n"; break;
+	case EFOPEN:	msg = "Can't open file: %s\n"; break;
+	case EFREAD:	msg = "Can't read from file: %s\n"; break;
+	case EFWRITE:	msg = "Can't write in file: %s\n"; break;
+	case EALLOC:	msg = "Error allocate memory\n"; break;
+	default:	msg = "Unknown error\n"; break; }
 
 	va_start(args, err);
 	vfprintf(stream, msg, args);

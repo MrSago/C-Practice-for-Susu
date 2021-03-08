@@ -9,9 +9,12 @@
 
 int main() {
 	double sum, f, s;
-	int n, i, j;
+	int i, n;
 
 
+	printf("Welcome to lab 1.5\n");
+
+	printf("Enter n: ");
 	if (scanf("%d", &n) != 1) {
 		printf("Error input\n");
 		return 0;
@@ -19,12 +22,8 @@ int main() {
 
 	sum = 0.0;
 	for (i = 1; i <= n; ++i) {
-		f = 0.0;
-		s = 0.0;
-		for (j = 1; j <= i; ++j) {
-			f += cos((double)j);
-			s += sin((double)j);
-		}
+		f += cos((double)i);
+		s += sin((double)i);
 		sum += f/s;
 	}
 	printf("%lf\n", sum);

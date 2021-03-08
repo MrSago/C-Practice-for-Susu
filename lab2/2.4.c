@@ -12,9 +12,12 @@ int main() {
 	int* res;
 	int count;
 	int prod;
-	int n, i, j, k, l, s;
+	int n = 0, i, j, k, l, s;
 
 
+	printf("Welcome to lab 2.4\n");
+
+	printf("Enter n: ");
 	if (scanf("%d", &n) != 1 || n <= 0) {
 		printf("Error input\n");
 		return 0;
@@ -26,6 +29,7 @@ int main() {
 		return 0;
 	}
 
+	printf("Enter matrix(%d)(%d):\n", n, n);
 	for (i = 0; i < n; ++i) {
 		matrix[i] = (int*)malloc(sizeof(int) * n);
 		if (matrix[i] == (int*)NULL) {
@@ -56,15 +60,27 @@ int main() {
 		return 0;
 	}
 
-	for (i = 0, j = count - 1; i < n - 1; ++i, --j) {
+	for (
+		i = 0, j = count - 1;
+		i < n - 1;
+		++i, --j
+	) {
 		prod = 1;
-		for (s = 0, k = i; s <= i; ++s, --k) {
+		for (
+			s = 0, k = i;
+			s <= i;
+			++s, --k
+		) {
 			prod *= matrix[s][k];
 		}
 		res[i] = prod;
 
 		prod = 1;
-		for (l = 0, s = n - 1 - i, k = n - 1; l <= i; ++l, ++s, --k) {
+		for (
+			l = 0, s = n - 1 - i, k = n - 1;
+			l <= i;
+			++l, ++s, --k
+		) {
 			prod *= matrix[s][k];
 		}
 		res[j] = prod;
@@ -76,6 +92,7 @@ int main() {
 	}
 	res[n - 1] = prod;
 
+	printf("Result: ");
 	for (i = 0; i < count; ++i) {
 		printf("%d ", res[i]);
 	}
