@@ -46,7 +46,7 @@ void printError(FILE* stream, const int err, ...) {
 	case EFREAD:	msg = "Can't read from file: %s\n"; break;
 	case EFWRITE:	msg = "Can't write in file: %s\n"; break;
 	case EALLOC:	msg = "Error allocate memory\n"; break;
-	default:	msg = "Unknown error\n"; break; }
+	default:		msg = "Unknown error\n"; break; }
 
 	va_start(args, err);
 	vfprintf(stream, msg, args);
