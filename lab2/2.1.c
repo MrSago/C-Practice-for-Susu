@@ -59,12 +59,12 @@ int main() {
 		}
 	}
 	if (flag) {
-		res = 0;
+		res = mass[--n];
 		while (n--) {
 			res += mass[n];
 		}
 	} else {
-		res = 1;
+		res = mass[--n];
 		while (n--) {
 			res *= mass[n];
 		}

@@ -33,6 +33,9 @@ int main() {
 	for (i = 0; i < n; ++i) {
 		matrix[i] = (int*)malloc(sizeof(int) * n);
 		if (matrix[i] == (int*)NULL) {
+			for (k = 0; k < i; ++k) {
+				free(matrix[k]);
+			}
 			free(matrix);
 			printf("Error allocate memory\n");
 			return 0;

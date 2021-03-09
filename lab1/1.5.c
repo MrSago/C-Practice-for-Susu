@@ -26,7 +26,7 @@ int main() {
 		s += sin((double)i);
 		sum += f/s;
 	}
-	printf("%lf\n", sum);
+	printf("Result: %lf\n", sum);
 
 	return 0;
 }
