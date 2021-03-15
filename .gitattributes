@@ -2,11 +2,12 @@
 * text=auto
 
 # GitHub
-.gitattributes	text
-.gitignore	text
+.gitattributes  text
+.gitignore      text
 
 # Source files
-*.c		text
+*.c             text
 
 # Test files
-*.txt		text
+*.txt           text
+
