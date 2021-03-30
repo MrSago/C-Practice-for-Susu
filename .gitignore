@@ -1,6 +1,6 @@
 
-./vs
-./vscode
+.vs/
+.vscode/
 *.out
 OUTPUT.TXT
 
