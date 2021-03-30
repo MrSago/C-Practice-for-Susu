@@ -59,7 +59,7 @@ int main() {
         end = max_i;
     }
     for (i = start + 1; i < end; ++i) {
-        if (mass[i] % 2 == 0 && i < n - 1 && mass[i + 1] != 0) {
+        if (mass[i] % 2 == 0 && i > 0 && mass[i - 1] != 0) {
             mass[i] *= -1;
         }
     }
