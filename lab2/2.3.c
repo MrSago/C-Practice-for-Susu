@@ -6,10 +6,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 int main() {
     int* mass;
     int* tmp;
-    int last_neg, count_even;
+    int last_min, count_even, cur;
     int n = 0, i, j;
 
 
@@ -28,21 +29,35 @@ int main() {
     }
 
     printf("Enter array: ");
-    last_neg = 0;
+    last_min = 0;
     count_even = 0;
     for (i = 0; i < n; ++i) {
-        if (scanf("%d", mass + i) != 1) {
+        if (scanf("%d", &cur) != 1) {
             free(mass);
             printf("Error input\n");
             return 0;
         }
-        if (mass[i] < 0) {
-            last_neg = mass[i];
+        if (cur % 2 == 0 && ++count_even % 2 == 0 && last_min < 0) {
+            tmp = (int*)realloc(mass, sizeof(int) * ++n);
+            if (tmp == (int*)NULL) {
+                printf("Error allocate memory\n");
+                return 0;
+            }
+            mass = tmp;
+            mass[i++] = last_min;
+            mass[i] = cur;
         }
-        if (mass[i] != 0 && mass[i] % 2 == 0) {
-            ++count_even;
+        if (cur < 0) {
+            last_min = cur;
         }
+        mass[i] = cur;
     }
+
+    printf("Result #1: ");
+    for (i = 0; i < n; ++i) {
+        printf("%d ", mass[i]);
+    }
+    printf("\n");
 
     for (i = 0; i < n; ++i) {
         if (mass[i] == 0) {
@@ -54,27 +69,14 @@ int main() {
         }
     }
 
-    tmp = (int*)realloc(mass, sizeof(int) * (n + count_even / 2));
+    tmp = (int*)realloc(mass, sizeof(int) * n);
     if (tmp == (int*)NULL) {
         printf("Error allocate memory\n");
         return 0;
     }
     mass = tmp;
 
-    count_even = 0;
-    for (i = 0; i < n; ++i) {
-        if (mass[i] % 2 == 0) {
-            if (++count_even % 2 == 0) {
-                for (j = n; j > i; --j) {
-                    mass[j] = mass[j - 1];
-                }
-                mass[i] = last_neg;
-                ++n; ++i;
-            }
-        }
-    }
-
-    printf("Result: ");
+    printf("Result #2: ");
     for (i = 0; i < n; ++i) {
         printf("%d ", mass[i]);
     }
