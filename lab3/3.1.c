@@ -13,20 +13,43 @@ typedef struct __array {
     int capacity;
 } Array;
 
-int resizeArray(Array* a) {
+Array initArray() {
+    Array a;
+
+
+    a.m = (int*)malloc(sizeof(int));
+    a.size = 0;
+    a.capacity = 1;
+
+    return a;
+}
+
+void freeArray(Array* a) {
+    if (a != (Array*)NULL) {
+        if (a->m != (int*)NULL) {
+            free(a->m);
+        }
+        a->size = 0;
+        a->capacity = 0;
+    }
+}
+
+int pushElement(Array* a, int e) {
     int* tmp;
 
 
     if (a->size == a->capacity) {
         tmp = (int*)realloc(a->m, sizeof(int) * (a->capacity *= 2));
         if (tmp == (int*)NULL) {
-            return -1;
+            return 0;
         }
         a->m = tmp;
     }
+    a->m[a->size++] = e;
 
-    return 0;
+    return 1;
 }
+
 
 int main() {
     Array arr;
@@ -39,55 +62,51 @@ int main() {
     printf("Enter insert value: ");
     if (scanf("%d", &insert) != 1) {
         printf("Error input\n");
-        return 0;
+        return -1;
     }
 
     printf("Enter replace value: ");
     if (scanf("%d", &repl) != 1) {
         printf("Error input\n");
-        return 0;
+        return -1;
+    }
+
+    arr = initArray();
+    if (arr.m == (int*)NULL) {
+        printf("Error allocate memory\n");
+        return -3;
     }
 
     fd = fopen("INPUT.TXT", "r");
     if (fd == (FILE*)NULL) {
+        freeArray(&arr);
         printf("Error open file\n");
-        return 0;
+        return -2;
     }
-
-    arr.m = (int*)malloc(sizeof(int));
-    if (arr.m == (int*)NULL) {
-        fclose(fd);
-        printf("Error allocate memory\n");
-        return 0;
-    }
-    arr.size = 0;
-    arr.capacity = 1;
 
     printf("INPUT.TXT:\n");
     while (fscanf(fd, "%d", &d) != EOF) {
         printf("%d ", d);
         if (d == repl) {
-            if (resizeArray(&arr)) {
+            if (!pushElement(&arr, insert)) {
                 fclose(fd);
                 printf("Error reallocate memory\n");
-                return 0;
+                return -4;
             }
-            arr.m[arr.size++] = insert;
         }
-        if (resizeArray(&arr)) {
+        if (!pushElement(&arr, d)) {
             fclose(fd);
             printf("Error reallocate memory\n");
-            return 0;
+            return -4;
         }
-        arr.m[arr.size++] = d;
     }
     fclose(fd);
 
     fd = fopen("OUTPUT.TXT", "w");
     if (fd == (FILE*)NULL) {
-        free(arr.m);
+        freeArray(&arr);
         printf("Error open file\n");
-        return 0;
+        return -2;
     }
 
     printf("\nOUTPUT.TXT:\n");
@@ -99,7 +118,7 @@ int main() {
     fprintf(fd, "\n");
 
     fclose(fd);
-    free(arr.m);
+    freeArray(&arr);
     return 0;
 }
 
