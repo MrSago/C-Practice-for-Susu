@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
 
 #define MAX_ZNAK (12)
 #define BUF_SIZE (128)
@@ -74,7 +73,7 @@ znak* initZnak(int* size) {
 
     for (i = 0;
             i < MAX_ZNAK &&
-            ret_ptr != (char*)NULL;
+            ret_ptr[0] != '0';
         ++i
     ) {
         printf("\n%d. клиент\n", i + 1);
@@ -83,7 +82,7 @@ znak* initZnak(int* size) {
         field[DATE_INDEX] = (void*)z[i].date;
         for (j = 0;
                 j < COUNT_FIELDS &&
-                (ret_ptr = fgets(buf, BUF_SIZE, stdin)) != (char*)NULL;
+                (ret_ptr = fgets(buf, BUF_SIZE, stdin))[0] != '0';
             ++j
         ) {
             switch (j) {
@@ -162,8 +161,6 @@ void findZnak(znak* z, int size) {
 }
 
 int main() {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
     znak* z = (znak*)NULL;
     int size = 0;
     char c;

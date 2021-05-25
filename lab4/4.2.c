@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <windows.h>
 
 #define MAX_ZNAK (12)
 #define BUF_SIZE (128)
@@ -117,7 +116,7 @@ list* initList() {
 
     for (i = 0;
             i < MAX_ZNAK &&
-            ret_ptr != (char*)NULL;
+            ret_ptr[0] != '0';
         ++i
     ) {
         printf("\n%d клиент\n", i + 1);
@@ -130,7 +129,7 @@ list* initList() {
         field[DATE_INDEX] = (void*)z->date;
         for (j = 0;
                 j < COUNT_FIELDS &&
-                (ret_ptr = fgets(buf, BUF_SIZE, stdin)) != (char*)NULL;
+                (ret_ptr = fgets(buf, BUF_SIZE, stdin))[0] != '0';
             ++j
         ) {
             switch (j) {
@@ -147,7 +146,7 @@ list* initList() {
                     break;
             }
         }
-        if (ret_ptr != (char*)NULL) {
+        if (ret_ptr[0] != '0') {
             pushZnak(head, z);
             while (head->prev != (list*)NULL) head = head->prev;
         } else {
@@ -222,8 +221,6 @@ void freeList(list* l) {
 }
 
 int main() {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
     list* l = (list*)NULL;
     char c;
 
