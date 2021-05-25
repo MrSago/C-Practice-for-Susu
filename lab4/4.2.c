@@ -110,17 +110,17 @@ list* initList() {
     head->next = (list*)NULL;
     head->z = (znak*)NULL;
 
-    printf("Введите данные:\n");
-    printf("1.Фамилия\n");
-    printf("2.Знак зодиака\n");
-    printf("3.Дата рождения\n");
+    printf("Р’РІРµРґРёС‚Рµ РґР°РЅРЅС‹Рµ:\n");
+    printf("1.Р¤Р°РјРёР»РёСЏ\n");
+    printf("2.Р—РЅР°Рє Р·РѕРґРёР°РєР°\n");
+    printf("3.Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ\n");
 
     for (i = 0;
             i < MAX_ZNAK &&
             ret_ptr != (char*)NULL;
         ++i
     ) {
-        printf("\n%d клиент\n", i + 1);
+        printf("\n%d РєР»РёРµРЅС‚\n", i + 1);
         z = (znak*)malloc(sizeof(znak));
         if (z == (znak*)NULL) {
             return head;
@@ -165,15 +165,15 @@ void printList(list* l) {
 
 
     if (l == (list*)NULL) {
-        printf("\nСписок пуст!\n");
+        printf("\nРЎРїРёСЃРѕРє РїСѓСЃС‚!\n");
         return;
     }
 
-    printf("\nСписок:\n");
+    printf("\nРЎРїРёСЃРѕРє:\n");
     for (i = 0; l != (list*)NULL; ++i) {
-        printf("№%d\nФамилия: %s\n", i + 1, l->z->familiya);
-        printf("Знак зодиака: %s\n", l->z->zodiac);
-        printf("Дата рождения: %d.%d.%d\n", l->z->date[0], l->z->date[1], l->z->date[2]);
+        printf("в„–%d\nР¤Р°РјРёР»РёСЏ: %s\n", i + 1, l->z->familiya);
+        printf("Р—РЅР°Рє Р·РѕРґРёР°РєР°: %s\n", l->z->zodiac);
+        printf("Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ: %d.%d.%d\n", l->z->date[0], l->z->date[1], l->z->date[2]);
         l = l->next;
     }
 }
@@ -185,27 +185,27 @@ void findZnak(list* l) {
 
 
     if (l == (list*)NULL) {
-        printf("\nСписок пуст!\n");
+        printf("\nРЎРїРёСЃРѕРє РїСѓСЃС‚!\n");
         return;
     }
 
-    printf("\nВведите фамилию: ");
+    printf("\nР’РІРµРґРёС‚Рµ С„Р°РјРёР»РёСЋ: ");
     fgets(buf, BUF_SIZE, stdin);
     buf[strlen(buf) - 1] = '\0';
 
     for (i = 0; l != (list*)NULL; ++i) {
         if (!strcmp(l->z->familiya, buf)) {
-            printf("Найдено совпадение:\n");
-            printf("№%d\nФамилия: %s\n", i + 1, l->z->familiya);
-            printf("Знак зодиака: %s\n", l->z->zodiac);
-            printf("Дата рождения: %d.%d.%d\n", l->z->date[0], l->z->date[1], l->z->date[2]);
+            printf("РќР°Р№РґРµРЅРѕ СЃРѕРІРїР°РґРµРЅРёРµ:\n");
+            printf("в„–%d\nР¤Р°РјРёР»РёСЏ: %s\n", i + 1, l->z->familiya);
+            printf("Р—РЅР°Рє Р·РѕРґРёР°РєР°: %s\n", l->z->zodiac);
+            printf("Р”Р°С‚Р° СЂРѕР¶РґРµРЅРёСЏ: %d.%d.%d\n", l->z->date[0], l->z->date[1], l->z->date[2]);
             check = 1;
         }
         l = l->next;
     }
 
     if (!check) {
-        printf("Записи не найдены\n");
+        printf("Р—Р°РїРёСЃРё РЅРµ РЅР°Р№РґРµРЅС‹\n");
     }
 }
 
@@ -229,11 +229,11 @@ int main() {
 
 
     while (1) {
-        printf("\nМеню\n");
-        printf("1.Ввод данных\n");
-        printf("2.Вывод данных\n");
-        printf("3.Вывод по фамилии\n");
-        printf("0.Выход\n");
+        printf("\nРњРµРЅСЋ\n");
+        printf("1.Р’РІРѕРґ РґР°РЅРЅС‹С…\n");
+        printf("2.Р’С‹РІРѕРґ РґР°РЅРЅС‹С…\n");
+        printf("3.Р’С‹РІРѕРґ РїРѕ С„Р°РјРёР»РёРё\n");
+        printf("0.Р’С‹С…РѕРґ\n");
 
         c = getchar();
         while (getchar() != '\n');
