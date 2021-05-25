@@ -18,6 +18,12 @@ typedef struct __znak {
     int date[3];
 } znak;
 
+typedef struct __list {
+    struct __list* prev;
+    struct __list* next;
+    znak* z;
+} list;
+
 enum znak_index {
     FAMILIYA_INDEX,
     ZODIAC_INDEX,
@@ -53,19 +59,56 @@ int cmp(const void* a, const void* b) {
     return 0;
 }
 
-znak* initZnak(int* size) {
+void pushZnak(list* l, znak* z) {
+    list* prev;
+
+
+    if (l->z == (znak*)NULL) {
+        l->z = z;
+        return;
+    }
+
+    while (l != (list*)NULL && cmp(l->z, z) != 1) {
+        prev = l;
+        l = l->next;
+    }
+
+    list* p = (list*)malloc(sizeof(list*));
+    if (p == (list*)NULL) {
+        return;
+    }
+
+    if (l == (list*)NULL) {
+        prev->next = p;
+        p->prev = prev;
+        p->next = (list*)NULL;
+    } else {
+        if (l->prev != (list*)NULL) {
+            l->prev->next = p;
+        }
+        p->prev = l->prev;
+        p->next = l;
+        l->prev = p;
+    }
+    p->z = z;
+}
+
+list* initList() {
     void* field[COUNT_FIELDS];
-    znak* z = (znak*)NULL, * tmp;
+    list* head;
+    znak* z;
     char buf[BUF_SIZE] = { '\0' };
     char* ret_ptr = buf;
     int i, j;
 
 
-    z = (znak*)malloc(sizeof(znak) * MAX_ZNAK);
-    if (z == (znak*)NULL) {
-        *size = 0;
-        return z;
+    head = (list*)malloc(sizeof(list));
+    if (head == (list*)NULL) {
+        return head;
     }
+    head->prev = (list*)NULL;
+    head->next = (list*)NULL;
+    head->z = (znak*)NULL;
 
     printf("Введите данные:\n");
     printf("1.Фамилия\n");
@@ -77,10 +120,14 @@ znak* initZnak(int* size) {
             ret_ptr != (char*)NULL;
         ++i
     ) {
-        printf("\n%d. клиент\n", i + 1);
-        field[FAMILIYA_INDEX] = (void*)z[i].familiya;
-        field[ZODIAC_INDEX] = (void*)z[i].zodiac;
-        field[DATE_INDEX] = (void*)z[i].date;
+        printf("\n%d клиент\n", i + 1);
+        z = (znak*)malloc(sizeof(znak));
+        if (z == (znak*)NULL) {
+            return head;
+        }
+        field[FAMILIYA_INDEX] = (void*)z->familiya;
+        field[ZODIAC_INDEX] = (void*)z->zodiac;
+        field[DATE_INDEX] = (void*)z->date;
         for (j = 0;
                 j < COUNT_FIELDS &&
                 (ret_ptr = fgets(buf, BUF_SIZE, stdin)) != (char*)NULL;
@@ -100,44 +147,44 @@ znak* initZnak(int* size) {
                     break;
             }
         }
+        if (ret_ptr != (char*)NULL) {
+            pushZnak(head, z);
+            while (head->prev != (list*)NULL) head = head->prev;
+        } else {
+            free(z);
+        }
     }
 
-    tmp = (znak*)realloc(z, sizeof(znak) * (i - 1));
-    if (tmp == (znak*)NULL) {
-        free(z);
-        *size = 0;
-        return tmp;
-    }
 
-    *size = i - 1;
-    qsort(tmp, *size, sizeof(znak), cmp);
-    return tmp;
+    
+    return head;
 }
 
-void printZnak(znak* z, int size) {
+void printList(list* l) {
     int i;
 
 
-    if (size <= 0) {
+    if (l == (list*)NULL) {
         printf("\nСписок пуст!\n");
         return;
     }
 
     printf("\nСписок:\n");
-    for (i = 0; i < size; ++i) {
-        printf("№%d\nФамилия: %s\n", i + 1, z[i].familiya);
-        printf("Знак зодиака: %s\n", z[i].zodiac);
-        printf("Дата рождения: %d.%d.%d\n", z[i].date[0], z[i].date[1], z[i].date[2]);
+    for (i = 0; l != (list*)NULL; ++i) {
+        printf("№%d\nФамилия: %s\n", i + 1, l->z->familiya);
+        printf("Знак зодиака: %s\n", l->z->zodiac);
+        printf("Дата рождения: %d.%d.%d\n", l->z->date[0], l->z->date[1], l->z->date[2]);
+        l = l->next;
     }
 }
 
-void findZnak(znak* z, int size) {
+void findZnak(list* l) {
     char buf[BUF_SIZE] = { '\0' };
     int i;
     int check = 0;
 
 
-    if (size <= 0) {
+    if (l == (list*)NULL) {
         printf("\nСписок пуст!\n");
         return;
     }
@@ -146,14 +193,15 @@ void findZnak(znak* z, int size) {
     fgets(buf, BUF_SIZE, stdin);
     buf[strlen(buf) - 1] = '\0';
 
-    for (i = 0; i < size; ++i) {
-        if (!strcmp(z[i].familiya, buf)) {
+    for (i = 0; l != (list*)NULL; ++i) {
+        if (!strcmp(l->z->familiya, buf)) {
             printf("Найдено совпадение:\n");
-            printf("№%d\nФамилия: %s\n", i + 1, z[i].familiya);
-            printf("Знак зодиака: %s\n", z[i].zodiac);
-            printf("Дата рождения: %d.%d.%d\n", z[i].date[0], z[i].date[1], z[i].date[2]);
+            printf("№%d\nФамилия: %s\n", i + 1, l->z->familiya);
+            printf("Знак зодиака: %s\n", l->z->zodiac);
+            printf("Дата рождения: %d.%d.%d\n", l->z->date[0], l->z->date[1], l->z->date[2]);
             check = 1;
         }
+        l = l->next;
     }
 
     if (!check) {
@@ -161,11 +209,22 @@ void findZnak(znak* z, int size) {
     }
 }
 
+void freeList(list* l) {
+    list* prev;
+
+
+    do {
+        prev = l;
+        l = l->next;
+        free(prev->z);
+        free(prev);
+    } while (l != (list*)NULL);
+}
+
 int main() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
-    znak* z = (znak*)NULL;
-    int size = 0;
+    list* l = (list*)NULL;
     char c;
 
 
@@ -180,20 +239,20 @@ int main() {
         while (getchar() != '\n');
         switch(c) {
         case '1':
-            if (z != (znak*)NULL) {
-                free(z);
+            if (l != (list*)NULL) {
+                freeList(l);
             }
-            z = initZnak(&size);
+            l = initList();
             break;
         case '2':
-            printZnak(z, size);
+            printList(l);
             break;
         case '3':
-            findZnak(z, size);
+            findZnak(l);
             break;
         case '0':
-            if (z != (znak*)NULL) {
-                free(z);
+            if (l != (list*)NULL) {
+                freeList(l);
             }
             return 0;
         }
