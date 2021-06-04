@@ -55,7 +55,7 @@ void printError(FILE* stream, const int err, ...) {
     return;
 }
 
-errno_t parsArg(int argc, char** argv, struct options* out) {
+int parsArg(int argc, char** argv, struct options* out) {
     bool err = false;
     bool i_flag = false;
     bool o_flag = false;
@@ -97,7 +97,7 @@ errno_t parsArg(int argc, char** argv, struct options* out) {
     return SUCCESS;
 }
 
-errno_t getDataFromFile(const char* file_name, char** ptr_data) {
+int getDataFromFile(const char* file_name, char** ptr_data) {
     FILE* fd;
     char* data;
     size_t data_size;
@@ -144,7 +144,7 @@ errno_t getDataFromFile(const char* file_name, char** ptr_data) {
     return SUCCESS;
 }
 
-errno_t writeDataToFile(const char* file_name, const char* data) {
+int writeDataToFile(const char* file_name, const char* data) {
     FILE* fd;
 
 
@@ -204,7 +204,7 @@ int main(int argc, char** argv, char** envp) {
     struct options opt;
     char* data;
     char* encode_data;
-    errno_t err;
+    int err;
 
 
     err = parsArg(argc, argv, &opt);
