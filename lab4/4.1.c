@@ -36,20 +36,12 @@ int cmp(const void* a, const void* b) {
     int* t2 = ((znak*)b)->date;
 
 
-    if (t1[YEAR_INDEX] < t2[YEAR_INDEX]) {
-        return -1;
-    } else if (t1[YEAR_INDEX] > t2[YEAR_INDEX]) {
-        return 1;
-    } else if (t1[MONTH_INDEX] < t2[MONTH_INDEX]) {
-        return -1;
-    } else if (t1[MONTH_INDEX] > t2[MONTH_INDEX]) {
-        return 1;
-    } else if (t1[DAY_INDEX] < t2[DAY_INDEX]) {
-        return -1;
-    } else if (t1[DAY_INDEX] > t2[DAY_INDEX]) {
-        return 1;
-    }
-    return 0;
+    return t1[YEAR_INDEX] < t2[YEAR_INDEX] ? -1 :       \
+                t1[YEAR_INDEX] > t2[YEAR_INDEX] ? 1 :   \
+            t1[MONTH_INDEX] < t2[MONTH_INDEX] ? -1 :    \
+                t1[MONTH_INDEX] > t2[MONTH_INDEX] ? 1 : \
+            t1[DAY_INDEX] < t2[DAY_INDEX] ? -1 :        \
+                t1[DAY_INDEX] > t2[DAY_INDEX] ? 1 : 0;
 }
 
 znak* initZnak(int* size) {
@@ -66,7 +58,7 @@ znak* initZnak(int* size) {
         return z;
     }
 
-    printf("Введите данные:\n");
+    printf("Введите данные (0 - конец ввода):\n");
     printf("1.Фамилия\n");
     printf("2.Знак зодиака\n");
     printf("3.Дата рождения\n");
@@ -77,9 +69,11 @@ znak* initZnak(int* size) {
         ++i
     ) {
         printf("\n%d. клиент\n", i + 1);
+
         field[FAMILIYA_INDEX] = (void*)z[i].familiya;
         field[ZODIAC_INDEX] = (void*)z[i].zodiac;
         field[DATE_INDEX] = (void*)z[i].date;
+
         for (j = 0;
                 j < COUNT_FIELDS &&
                 (ret_ptr = fgets(buf, BUF_SIZE, stdin))[0] != '0';
@@ -103,7 +97,6 @@ znak* initZnak(int* size) {
 
     tmp = (znak*)realloc(z, sizeof(znak) * (i - 1));
     if (tmp == (znak*)NULL) {
-        free(z);
         *size = 0;
         return tmp;
     }
@@ -174,7 +167,7 @@ int main() {
         printf("0.Выход\n");
 
         c = getchar();
-        while (getchar() != '\n');
+        while (c != '\n' && getchar() != '\n');
         switch(c) {
         case '1':
             if (z != (znak*)NULL) {
