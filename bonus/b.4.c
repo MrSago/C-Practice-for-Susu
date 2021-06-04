@@ -55,7 +55,7 @@ void printError(FILE* stream, const int err, ...) {
     return;
 }
 
-int parsArg(int argc, char** argv, struct options* out) {
+errno_t parsArg(int argc, char** argv, struct options* out) {
     bool err = false;
     bool i_flag = false;
     bool o_flag = false;
@@ -97,11 +97,11 @@ int parsArg(int argc, char** argv, struct options* out) {
     return SUCCESS;
 }
 
-int getDataFromFile(const char* file_name, char** ptr_data) {
+errno_t getDataFromFile(const char* file_name, char** ptr_data) {
     FILE* fd;
     char* data;
     size_t data_size;
-    int err;
+    int retcode;
 
 
     fd = fopen(file_name, "r");
@@ -110,18 +110,18 @@ int getDataFromFile(const char* file_name, char** ptr_data) {
         return EFOPEN;
     }
 
-    err = fseek(fd, 0, SEEK_END);
-    if (err) {
+    retcode = fseek(fd, 0, SEEK_END);
+    if (retcode) {
         fclose(fd);
         *ptr_data = (char*)NULL;
-        return err;
+        return EFREAD;
     }
     data_size = (size_t)ftell(fd);
-    err = fseek(fd, 0, SEEK_SET);
-    if (err) {
+    retcode = fseek(fd, 0, SEEK_SET);
+    if (retcode) {
         fclose(fd);
         *ptr_data = (char*)NULL;
-        return err;
+        return EFREAD;
     }
 
     data = (char*)malloc(sizeof(char) * (data_size + 1));
@@ -144,7 +144,7 @@ int getDataFromFile(const char* file_name, char** ptr_data) {
     return SUCCESS;
 }
 
-int writeDataToFile(const char* file_name, const char* data) {
+errno_t writeDataToFile(const char* file_name, const char* data) {
     FILE* fd;
 
 
@@ -153,7 +153,7 @@ int writeDataToFile(const char* file_name, const char* data) {
         return EFOPEN;
     }
 
-    if (fprintf(fd, "%s\n", data) < 0) {
+    if (fprintf(fd, "%s", data) < 0) {
         fclose(fd);
         return EFWRITE;
     }
@@ -169,7 +169,7 @@ char* encodeBase64(const char* data, const size_t data_lenght) {
 
     unsigned char bit8[3];
     unsigned long bitmask;
-    int mod[] = { 0, 2, 1 };
+    const int mod[] = { 0, 2, 1 };
 
 
     encode_lenght = 4 * ((data_lenght + 2) / 3);
@@ -204,7 +204,7 @@ int main(int argc, char** argv, char** envp) {
     struct options opt;
     char* data;
     char* encode_data;
-    int err;
+    errno_t err;
 
 
     err = parsArg(argc, argv, &opt);
