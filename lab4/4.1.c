@@ -168,7 +168,7 @@ int main() {
 
         c = getchar();
         while (c != '\n' && getchar() != '\n');
-        switch(c) {
+        switch (c) {
         case '1':
             if (z != (znak*)NULL) {
                 free(z);

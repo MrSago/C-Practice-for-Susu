@@ -7,6 +7,7 @@
 
 #define MAX_N (1000)
 
+
 int main() {
     int mass[MAX_N];
     int last_min, count_even;

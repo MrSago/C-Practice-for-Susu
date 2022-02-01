@@ -3,8 +3,8 @@
     #define _CRT_SECURE_NO_WARNINGS
 #endif //_MSC_VER
 
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
 
 #ifndef M_PI
     #define M_PI (acos(-1))

@@ -3,10 +3,10 @@
     #define _CRT_SECURE_NO_WARNINGS
 #endif //_MSC_VER
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #define SUCCESS (0)
