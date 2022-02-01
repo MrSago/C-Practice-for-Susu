@@ -4,6 +4,7 @@
 # GitHub
 .gitattributes  text
 .gitignore      text
+README.md       text
 
 # Source files
 *.c             text
